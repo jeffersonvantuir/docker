@@ -1,0 +1,26 @@
+version: '3'
+
+services:
+  web:
+    container_name: web
+    build:
+      context: ./docker/php
+      dockerfile: Dockerfile
+    image: php:8.1-apache
+    volumes:
+      - ./:/var/www/html/
+    ports:
+      - 80:80
+    depends_on:
+      - db
+
+  db:
+    container_name: db
+    image: mariadb:10.7
+    restart: always
+    environment:
+      MARIADB_USER: develop
+      MARIADB_PASSWORD: develop
+      MARIADB_ROOT_PASSWORD: develop
+    ports:
+      - 3306:3306
